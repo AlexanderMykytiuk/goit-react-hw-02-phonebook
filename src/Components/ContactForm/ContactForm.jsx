@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styles from './ContactForm.module.css';
-// import { v4 as uuidv4 } from 'uuid';
 
-class ContactForm extends React.Component {
+
+class ContactForm extends Component {
   state = {
-    name: ' ',
+    name: '',
     number: '',
   };
-  // inputId = uuidv4();
+  
   handleInputChange = event => {
-    const valueInput = event.currentTarget.name;
-    this.setState({ [valueInput]: event.currentTarget.value.trimLeft() });
+    const inputValue = event.currentTarget.name;
+    this.setState({ [inputValue]: event.currentTarget.value});
   };
 
   handleSubmit = event => {
@@ -19,23 +19,24 @@ class ContactForm extends React.Component {
     const { contacts, addContact } = this.props;
     const { name, number } = this.state;
     const findName = contacts.find(findContact => {
-      return findContact.name === name;
-    });
-
+      return findContact.name === name
+    })
     if (findName) {
-      alert(`${name} is already in the contacts`);
+      alert(`${name} is already in contacts, try again`);
       this.reset();
     } else {
       addContact(name, number);
       this.reset();
     }
   };
+
   reset = () => {
     this.setState({
       name: ' ',
       number: '',
     });
   };
+
   render() {
     const { name, number } = this.state;
     return (
@@ -69,7 +70,7 @@ class ContactForm extends React.Component {
       </div>
     );
   }
-}
+};
 
 ContactForm.propTypes = {
   addContact: PropTypes.func.isRequired,
@@ -81,4 +82,5 @@ ContactForm.propTypes = {
     }),
   ).isRequired,
 };
+
 export default ContactForm;

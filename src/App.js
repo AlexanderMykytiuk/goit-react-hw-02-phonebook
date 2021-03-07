@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import Container from './Components/Container';
-import ContactList from './Components/ContactList';
-import ContactForm from './Components/ContactForm';
-import Filter from './Components/Filter';
+import React, { Component } from "react";
+import { v4 as uuidv4 } from "uuid";
+import Container from "./Components/Container";
+import ContactForm from "./Components/ContactForm";
+import Filter from "./Components/Filter";
+import ContactList from "./Components/ContactList";
 
 class App extends Component {
   state = {
     contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+      { id: "id-1", name: "Alex Simona", number: "459-00-56" },
+      { id: "id-2", name: "Harison Krein", number: "460-89-12" },
+      { id: "id-3", name: "Lui Clemensa", number: "623-17-56" },
+      { id: "id-4", name: "Olga Kopernik", number: "290-71-59" },
     ],
-    filter: '',
+    filter: "",
   };
 
   addContact = (name, number) => {
@@ -23,27 +23,31 @@ class App extends Component {
       number,
     };
 
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       contacts: [contact, ...prevState.contacts],
-      filter: '',
+      filter: "",
     }));
   };
 
-  deleteContact = contactId => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contactId !== contact.id),
-    }));
-  };
-
-  handleInputSearch = e => {
+  handleInputSearch = (e) => {
     this.setState({ filter: e.currentTarget.value });
   };
+
   getfilterContact = () => {
     const { contacts, filter } = this.state;
     const normalizedContact = filter.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedContact),
+    return contacts.filter((contact) =>
+      contact.name.toLowerCase().includes(normalizedContact)
     );
+  };
+
+  deleteContact = (contactId) => {
+    this.setState((prevState) => ({
+      contacts: prevState.contacts.filter(
+        (contact) => contactId !== contact.id
+      ),
+      filter: '',
+    }));
   };
 
   render() {
@@ -54,7 +58,7 @@ class App extends Component {
         <h1>Phonebook</h1>
         <ContactForm contacts={contacts} addContact={this.addContact} />
 
-        <Filter filter={filter} onHandleInputSearch={this.handleInputSearch} />
+        <Filter filter={filter} onInputSearch={this.handleInputSearch} />
 
         <ContactList
           contacts={this.getfilterContact()}
